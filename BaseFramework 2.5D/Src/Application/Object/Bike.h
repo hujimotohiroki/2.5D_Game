@@ -18,4 +18,5 @@ private:
 	float speed;
 	//重力
 	float m_gravity = 0.0f;
+	float AnimCnt = 0.0f;
 };

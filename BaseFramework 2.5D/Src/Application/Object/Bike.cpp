@@ -6,6 +6,7 @@ void Bike::Init()
 	m_polygon = std::make_shared<KdSquarePolygon>();
 	m_polygon->SetMaterial("Asset/Textures/Bike.png");
 	m_polygon->SetPivot(KdSquarePolygon::PivotType::Center_Bottom);
+	m_polygon->SetSplit(2,1);
 	m_pos = { 0,0,0 };
 	m_rot = { 0,0,0 };
 	speed = 0;
@@ -14,7 +15,8 @@ void Bike::Init()
 
 void Bike::Update()
 {
-	
+	AnimCnt += speed;
+	m_polygon->SetUVRect(((int)(abs(AnimCnt)*10)) % 2);
 	
 	m_gravity += 0.003f;	// 重力加速度
 
@@ -32,6 +34,7 @@ void Bike::Update()
 
 	// 段差の許容範囲を設定
 	static const float enableStepHigh = 0.1f;
+	//タイヤの半分の高さにしたい
 	rayInfo.m_pos.y += enableStepHigh;			// 0.1f までの段差は登れる
 
 	// レイの方向を設定

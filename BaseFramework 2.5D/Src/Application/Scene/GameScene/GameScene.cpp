@@ -24,5 +24,6 @@ void GameScene::Init()
 	m_objList.push_back(bike);
 	std::shared_ptr<Ground> ground = std::make_shared<Ground>();
 	ground->Init();
+	ground->SetPos({0, 0, 0});
 	m_objList.push_back(ground);
 }
