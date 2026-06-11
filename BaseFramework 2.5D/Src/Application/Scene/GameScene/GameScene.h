@@ -9,8 +9,9 @@ public :
 	GameScene()  { Init(); }
 	~GameScene() {}
 
+	int GetTimer() { return timer; }
 private:
-
+	int timer;
 	void Event() override;
 	void Init()  override;
 };

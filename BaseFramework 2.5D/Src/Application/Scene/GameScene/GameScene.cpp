@@ -1,6 +1,6 @@
 ﻿#include "GameScene.h"
 #include"../SceneManager.h"
-#include"../../Object/Bike.h"
+#include"../../Object/Bike/Bike.h"
 #include"../../Object/Ground/Ground.h"
 void GameScene::Event()
 {
@@ -11,9 +11,10 @@ void GameScene::Event()
 			SceneManager::SceneType::Title
 		);
 	}
-	Math::Vector3 camPos = { 0,1,-5 };
+	Math::Vector3 camPos = { 0,1,-10 };
 	Math::Matrix transMat = Math::Matrix::CreateTranslation(camPos);
 	m_camera->SetCameraMatrix(transMat);
+	timer++;
 }
 
 void GameScene::Init()
@@ -26,4 +27,5 @@ void GameScene::Init()
 	ground->Init();
 	ground->SetPos({0, 0, 0});
 	m_objList.push_back(ground);
+	timer = -180;
 }

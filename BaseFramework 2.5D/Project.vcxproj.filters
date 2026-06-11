@@ -82,6 +82,12 @@
     <Filter Include="Src\Application\Object\Ground">
       <UniqueIdentifier>{7690025f-f745-4839-8b10-716549b5f5d6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\Object\BackGround">
+      <UniqueIdentifier>{e68bfd27-5e54-4095-916a-b7261bae87d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Object\Bike">
+      <UniqueIdentifier>{a36c8415-97fd-45e0-b44d-ffc646407333}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -258,11 +264,11 @@
     <ClInclude Include="Src\Application\Scene\BaseScene\BaseScene.h">
       <Filter>Src\Application\Scene\BaseScene</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Application\Object\Bike.h">
-      <Filter>Src\Application\Object</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Application\Object\Ground\Ground.h">
       <Filter>Src\Application\Object\Ground</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Object\Bike\Bike.h">
+      <Filter>Src\Application\Object\Bike</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -410,11 +416,11 @@
     <ClCompile Include="Src\Application\Scene\BaseScene\BaseScene.cpp">
       <Filter>Src\Application\Scene\BaseScene</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Application\Object\Bike.cpp">
-      <Filter>Src\Application\Object</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Application\Object\Ground\Ground.cpp">
       <Filter>Src\Application\Object\Ground</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Object\Bike\Bike.cpp">
+      <Filter>Src\Application\Object\Bike</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
