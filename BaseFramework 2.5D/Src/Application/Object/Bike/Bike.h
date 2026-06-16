@@ -1,4 +1,5 @@
 ﻿#pragma once
+class GameScene;
 class Bike :public KdGameObject {
 public:
 	Bike() {};
@@ -8,7 +9,12 @@ public:
 	void PostUpdate()override;
 	void GenerateDepthMapFromLight()override;
 	void DrawLit()override;
+
+
+	void SetOwner(GameScene* owner) { m_owner = owner; }
+	int GetPaper() { return paper; }
 private:
+	GameScene* m_owner;
 	std::shared_ptr<KdSquarePolygon> m_polygon;
 	//座標
 	//バイク自体の座標
@@ -31,6 +37,11 @@ private:
 	//重力
 	float m_Frontgravity;//前のタイヤ
 	float m_Reargravity;//後ろのタイヤ
-	const float gravityacc = 0.003f;
+	const float gravityacc = 0.001f;
 	float AnimCnt = 0.0f;
+	float BikeRadius = 0.5f;//画像の半径
+	int paper;
+
+	float m_Dissolve = 0.0f;
+	bool m_OutroFlg = false;
 };

@@ -82,11 +82,14 @@
     <Filter Include="Src\Application\Object\Ground">
       <UniqueIdentifier>{7690025f-f745-4839-8b10-716549b5f5d6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src\Application\Object\BackGround">
-      <UniqueIdentifier>{e68bfd27-5e54-4095-916a-b7261bae87d9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Src\Application\Object\Bike">
       <UniqueIdentifier>{a36c8415-97fd-45e0-b44d-ffc646407333}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Object\Paper">
+      <UniqueIdentifier>{cef7e9bd-8cac-4563-9944-dcbdd540c76e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Object\Back">
+      <UniqueIdentifier>{e68bfd27-5e54-4095-916a-b7261bae87d9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -270,6 +273,12 @@
     <ClInclude Include="Src\Application\Object\Bike\Bike.h">
       <Filter>Src\Application\Object\Bike</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\Object\Paper\Paper.h">
+      <Filter>Src\Application\Object\Paper</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Object\Back\Back.h">
+      <Filter>Src\Application\Object\Back</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -421,6 +430,12 @@
     </ClCompile>
     <ClCompile Include="Src\Application\Object\Bike\Bike.cpp">
       <Filter>Src\Application\Object\Bike</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Object\Paper\Paper.cpp">
+      <Filter>Src\Application\Object\Paper</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Object\Back\Back.cpp">
+      <Filter>Src\Application\Object\Back</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

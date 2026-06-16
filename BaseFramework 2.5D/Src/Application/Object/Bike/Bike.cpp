@@ -1,6 +1,6 @@
 ﻿#include"Bike.h"
 #include"../../Scene/SceneManager.h"
-
+#include"../../Scene/GameScene/GameScene.h"
 void Bike::Init()
 {
 	m_polygon = std::make_shared<KdSquarePolygon>();
@@ -18,91 +18,82 @@ void Bike::Init()
 	m_Reargravity = 0;
 	speed = 0;
 	m_pDebugWire = std::make_unique<KdDebugWireFrame>();
+	paper = 0;
 }
 
 void Bike::Update()
 {
+	if(m_OutroFlg)
+	{
+		PostUpdate();
+		return;
+	}
+	
 	AnimCnt += speed;
 	m_polygon->SetUVRect(((int)(abs(AnimCnt)*10)) % 2);
-
-	m_Frontpos.x=m_pos.x+ cosf(DirectX::XMConvertToRadians(m_rot.y))*0.5f;
-	m_Frontpos.z=m_pos.z-sinf(DirectX::XMConvertToRadians(m_rot.y))*0.5f;
-	m_Rearpos.x=m_pos.x- cosf(DirectX::XMConvertToRadians(m_rot.y))*0.5f;
-	m_Rearpos.z=m_pos.z+ sinf(DirectX::XMConvertToRadians(m_rot.y))*0.5f;
+	/*if (m_owner->GetTimer() < 0)
+	{
+		return;
+	}*/
+	m_Frontpos.x = m_pos.x + cosf(DirectX::XMConvertToRadians(m_rot.y)) * 0.4f;
+	m_Frontpos.y = m_pos.y + sinf(DirectX::XMConvertToRadians(m_rot.z)) * 0.4f;
+	m_Frontpos.z = m_pos.z - sinf(DirectX::XMConvertToRadians(m_rot.y)) * 0.4f;
+	m_Rearpos.x = m_pos.x - cosf(DirectX::XMConvertToRadians(m_rot.y)) * 0.4f;
+	m_Rearpos.y = m_pos.y - sinf(DirectX::XMConvertToRadians(m_rot.z)) * 0.4f;
+	m_Rearpos.z = m_pos.z + sinf(DirectX::XMConvertToRadians(m_rot.y)) * 0.4f;
 
 	m_Frontgravity -= gravityacc;	// 重力による落下速度の変更
 	m_Reargravity -= gravityacc;	// 重力による落下速度の変更
 
-	// ========================================
-	// 当たり判定　・・・　レイ判定　ここから
-	// ========================================
+	//===================
+	//球（スフィア）判定
+	//===================
+	//球判定用の変数を用意
+	KdCollider::SphereInfo Frontsphere,Rearsphere;
 
-	KdCollider::RayInfo FrontrayInfo,RearrayInfo;
-	// レイの発射位置（座標）を設定
-	FrontrayInfo.m_pos = m_Frontpos;
-	RearrayInfo.m_pos = m_Rearpos;
-
-	// 段差の許容範囲を設定
+	//球の中心座標を設定
+	Frontsphere.m_sphere.Center = m_Frontpos;
+	Rearsphere.m_sphere.Center = m_Rearpos;
 	static const float enableStepHigh = 0.1f;
+	Frontsphere.m_sphere.Center.y += enableStepHigh;
+	Rearsphere.m_sphere.Center.y += enableStepHigh;
+	
+	//球の半径を設定
+	Rearsphere.m_sphere.Radius = 0.1;
+	Frontsphere.m_sphere.Radius = 0.1;
+	
+	//当たり判定をしたいタイプを設定
+	Rearsphere.m_type = KdCollider::TypeGround;
+	Frontsphere.m_type = KdCollider::TypeGround;
 
-	FrontrayInfo.m_pos.y += enableStepHigh;
-	RearrayInfo.m_pos.y += enableStepHigh;
-	// 0.1f までの段差は登れる
-
-	// レイの方向を設定
-	FrontrayInfo.m_dir = { 0.0f, -1.0f, 0.0f };
-	RearrayInfo.m_dir = { 0.0f, -1.0f, 0.0f };
-
-	// レイの長さを設定
-	FrontrayInfo.m_range = enableStepHigh - m_Frontgravity;
-	RearrayInfo.m_range = enableStepHigh - m_Reargravity;
-
-	// 当たり判定をしたいタイプを設定
-	FrontrayInfo.m_type = KdCollider::TypeGround;
-	RearrayInfo.m_type = KdCollider::TypeGround;
-
-	// デバッグ用の情報としてライン描画を追加
-	m_pDebugWire->AddDebugLine
-	(
-		RearrayInfo.m_pos,	// 線の開始位置
-		RearrayInfo.m_dir,	// 線の方向
-		RearrayInfo.m_range	// 線の長さ
-	);
-
-
-	// レイに当たったオブジェクト情報を格納するリスト
-	std::list<KdCollider::CollisionResult> FrontretRayList,RearretRayList;
-
-	// 作成したレイ情報でオブジェクトリストと当たり判定をする
-	for (auto& obj : SceneManager::Instance().GetObjList())
-	{
-		obj->Intersects(FrontrayInfo, &FrontretRayList);
-		obj->Intersects(RearrayInfo, &RearretRayList);
+	//デバッグ
+	m_pDebugWire->AddDebugSphere(Rearsphere.m_sphere.Center, Frontsphere.m_sphere.Radius);
+	
+	//球に当たったオブジェクト情報を格納するリスト
+	std::list<KdCollider::CollisionResult> FrontretSphereList,RearretSphereList;
+	for (auto& obj : SceneManager::Instance().GetObjList()) {
+		obj->Intersects(Frontsphere, &FrontretSphereList);
+		obj->Intersects(Rearsphere, &RearretSphereList);
 	}
-
-	// レイに当たったリストから一番近いオブジェクトを検出
-	bool hit=false;
-	float maxOverLap=0;
-	Math::Vector3 FrontgroundPos = {}, ReargroundPos = {};	// レイが遮断された(Hitした)座標
-
-	for (auto& ret : FrontretRayList)
-	{
-		// レイが当たったオブジェクトの中から
-		// 「m_overlapDistance = 貫通した長さ」が一番長いものを探す
-		// 「m_overlapDistance が一番長い = 一番近くで当たった」と判定できる
-		if (maxOverLap < ret.m_overlapDistance)
-		{
-			maxOverLap = ret.m_overlapDistance;
-			FrontgroundPos = ret.m_hitPos;
+	
+	//球に当たったリストから一番近いオブジェクトを探す
+	float maxOverlap = 0;
+	bool hit = false;
+	Math::Vector3 hitDir;//当たった方向
+	for (auto& ret : FrontretSphereList) {
+		if (maxOverlap < ret.m_overlapDistance) {
+			maxOverlap = ret.m_overlapDistance;
+			hitDir = ret.m_hitDir;
 			hit = true;
 		}
 	}
-
-	if (hit)
-	{
-		m_Frontpos = FrontgroundPos;	// レイの着弾地点に着地
+	
+	if (hit == true) {
+		//方向ベクトルを長さ1にする
+		hitDir.Normalize();
+		m_Frontpos += hitDir * maxOverlap;
 		m_Frontgravity = 0;
-		m_Frontdir.y = tanf(DirectX::XMConvertToRadians(m_rot.z));
+		m_Frontdir.y = sinf(DirectX::XMConvertToRadians(m_rot.z));//坂を上っているときのy速度
 		//前が地面についていないと向きを変えられない
 		if (GetAsyncKeyState(VK_LEFT) & 0x8000)
 		{
@@ -112,30 +103,25 @@ void Bike::Update()
 		{
 			m_rot.y += 1.0f;
 		}
+		speed *= 0.995;
 	}
 
+	maxOverlap = 0;
 	hit = false;
-	maxOverLap = 0;
-
-	for (auto& ret : RearretRayList)
-	{
-		// レイが当たったオブジェクトの中から
-		// 「m_overlapDistance = 貫通した長さ」が一番長いものを探す
-		// 「m_overlapDistance が一番長い = 一番近くで当たった」と判定できる
-		if (maxOverLap < ret.m_overlapDistance)
-		{
-			maxOverLap = ret.m_overlapDistance;
-			ReargroundPos = ret.m_hitPos;
+	for (auto& ret : RearretSphereList) {
+		if (maxOverlap < ret.m_overlapDistance) {
+			maxOverlap = ret.m_overlapDistance;
+			hitDir = ret.m_hitDir;
 			hit = true;
 		}
 	}
-
-	// 当たっていたら
-	if (hit)
-	{
-		m_Rearpos = ReargroundPos;	// レイの着弾地点に着地
+	
+	if (hit == true) {
+		//方向ベクトルを長さ1にする
+		hitDir.Normalize();
+		m_Rearpos += hitDir * maxOverlap;
 		m_Reargravity = 0;
-		m_Reardir.y = tanf(DirectX::XMConvertToRadians(m_rot.z));
+		m_Reardir.y = sinf(DirectX::XMConvertToRadians(m_rot.z));//坂を上っているときのy速度
 		//後ろが地面についていないと慣性移動しかできない
 		if (GetAsyncKeyState(VK_UP) & 0x8000)
 		{
@@ -143,23 +129,46 @@ void Bike::Update()
 		}
 		if (GetAsyncKeyState(VK_DOWN) & 0x8000)
 		{
-			speed -= 0.001f;
+			speed -= 0.0006f;
+		}
+		speed *= 0.995;
+		if (abs(speed) < 0.0005)speed = 0;
+	}
+	
+	//当たり判定（アイテムとの）
+	KdCollider::SphereInfo sphere;
+	sphere.m_sphere.Center = GetPos()+ Math::Vector3{ -sinf(DirectX::XMConvertToRadians(m_rot.z)) * BikeRadius,cosf(DirectX::XMConvertToRadians(m_rot.z))*BikeRadius,0};
+	sphere.m_sphere.Radius = BikeRadius;
+	sphere.m_type = KdCollider::TypeDamage;
+
+	//デバッグ
+	//m_pDebugWire->AddDebugSphere(sphere.m_sphere.Center, sphere.m_sphere.Radius, kRedColor);
+
+	//当たったオブジェクト情報を格納するリストは不要
+
+	for (auto& obj : SceneManager::Instance().GetObjList())
+	{
+
+		if (obj->Intersects(sphere, nullptr) == true) {
+			obj->OnHit();
+			paper++;
+			//紙を回収した
 		}
 	}
-	// ========================================
-	// 当たり判定　・・・　レイ判定　ここまで
-	// ========================================
 	
 	float x, y;
-	x = 1.0f; //中央からタイヤまでの距離の二倍
+	Math::Vector3 dist;
+	dist.x = m_Frontpos.x - m_Rearpos.x;
+	dist.z = m_Frontpos.z - m_Rearpos.z;
+	x = dist.Length();
 	y = m_Frontpos.y - m_Rearpos.y;
 	m_rot.z = DirectX::XMConvertToDegrees(atan2(y,x));//あからさまに二度手間だがdirをディグリーに統一するためにディグリーに変える
 	
 	//座標更新
 	m_Frontdir.x = cosf(DirectX::XMConvertToRadians(m_rot.y));
 	m_Frontdir.z = -sinf(DirectX::XMConvertToRadians(m_rot.y));
-	m_Reardir.x = cosf(DirectX::XMConvertToRadians(m_rot.y));
-	m_Reardir.z = -sinf(DirectX::XMConvertToRadians(m_rot.y));
+	m_Reardir.x = -cosf(DirectX::XMConvertToRadians(m_rot.y));
+	m_Reardir.z = sinf(DirectX::XMConvertToRadians(m_rot.y));
 
 	m_Frontpos.x += m_Frontdir.x * speed;
 	m_Frontpos.y += m_Frontdir.y*speed+m_Frontgravity;
@@ -171,7 +180,7 @@ void Bike::Update()
 	
 
 	m_pos = (m_Frontpos + m_Rearpos) / 2;
-	
+	//Math::Vector3 dist = m_Frontpos - m_Rearpos;
 	//移動行列
 	Math::Matrix transmat = Math::Matrix::CreateTranslation(m_pos);
 	//回転行列
@@ -179,11 +188,15 @@ void Bike::Update()
 	Math::Matrix rotatematZ = Math::Matrix::CreateRotationZ(DirectX::XMConvertToRadians(m_rot.z));
 	//ワールド行列の合成
 	m_mWorld = rotatematZ * rotatematY * transmat;
+	if (m_pos.y < -10)m_OutroFlg=true;
 }
 
 void Bike::PostUpdate()
 {
-
+	if (m_OutroFlg) {
+		m_Dissolve += 0.01f;
+		if (m_Dissolve>1) m_isExpired = true;
+	}
 }
 
 void Bike::GenerateDepthMapFromLight()
@@ -193,5 +206,8 @@ void Bike::GenerateDepthMapFromLight()
 
 void Bike::DrawLit()
 {
+	float range = 0.3;
+	Math::Vector3 color = { 1,0.3,0.3 };
+	KdShaderManager::Instance().m_StandardShader.SetDissolve(m_Dissolve, &range, &color);
 	KdShaderManager::Instance().m_StandardShader.DrawPolygon(*m_polygon, m_mWorld);
 }
