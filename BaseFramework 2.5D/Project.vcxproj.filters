@@ -91,6 +91,33 @@
     <Filter Include="Src\Application\Object\Back">
       <UniqueIdentifier>{e68bfd27-5e54-4095-916a-b7261bae87d9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\Object\Goal">
+      <UniqueIdentifier>{86d9f2f0-89be-4840-aaab-321949aacf9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Object\BlackBoard">
+      <UniqueIdentifier>{447021ba-465a-462c-9fd2-f796993a161b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Object\TitleGround">
+      <UniqueIdentifier>{8ece0e61-c893-4f91-a33a-8b858528a94b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Object\Clock">
+      <UniqueIdentifier>{4c624a83-ed51-4eba-8d86-163c765e065b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Object\Needle">
+      <UniqueIdentifier>{5fa61aab-3f71-4f39-949d-72b86668ea45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Object\Title">
+      <UniqueIdentifier>{d04f4dc6-4cfa-4f1b-a55b-a4ef113236f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Object\Result">
+      <UniqueIdentifier>{297d0b2e-d9a9-410d-afdf-217e333a6788}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Object\Crystal">
+      <UniqueIdentifier>{e5b9f470-81bb-4af7-9eb6-e1294c0a1c78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Object\Rank">
+      <UniqueIdentifier>{579cc066-0feb-449a-a11c-17409a572eab}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -279,6 +306,39 @@
     <ClInclude Include="Src\Application\Object\Back\Back.h">
       <Filter>Src\Application\Object\Back</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\Object\Goal\Goal.h">
+      <Filter>Src\Application\Object\Goal</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Object\BlackBoard\BlackBoard.h">
+      <Filter>Src\Application\Object\BlackBoard</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Object\TitleGround\TitleGround.h">
+      <Filter>Src\Application\Object\TitleGround</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Object\Clock\Clock.h">
+      <Filter>Src\Application\Object\Clock</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Object\Needle\Needle.h">
+      <Filter>Src\Application\Object\Needle</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Object\Title\Title.h">
+      <Filter>Src\Application\Object\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Object\Result\TimeOver.h">
+      <Filter>Src\Application\Object\Result</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Object\Result\GameOver.h">
+      <Filter>Src\Application\Object\Result</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Object\Result\GameClear.h">
+      <Filter>Src\Application\Object\Result</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Object\Crystal\Crystal.h">
+      <Filter>Src\Application\Object\Crystal</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Object\Rank\Rank.h">
+      <Filter>Src\Application\Object\Rank</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -436,6 +496,39 @@
     </ClCompile>
     <ClCompile Include="Src\Application\Object\Back\Back.cpp">
       <Filter>Src\Application\Object\Back</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Object\Goal\Goal.cpp">
+      <Filter>Src\Application\Object\Goal</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Object\BlackBoard\BlackBoard.cpp">
+      <Filter>Src\Application\Object\BlackBoard</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Object\TitleGround\TitleGround.cpp">
+      <Filter>Src\Application\Object\TitleGround</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Object\Clock\Clock.cpp">
+      <Filter>Src\Application\Object\Clock</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Object\Needle\Needle.cpp">
+      <Filter>Src\Application\Object\Needle</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Object\Title\Title.cpp">
+      <Filter>Src\Application\Object\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Object\Result\TimeOver.cpp">
+      <Filter>Src\Application\Object\Result</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Object\Result\GameOver.cpp">
+      <Filter>Src\Application\Object\Result</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Object\Result\GameClear.cpp">
+      <Filter>Src\Application\Object\Result</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Object\Crystal\Crystal.cpp">
+      <Filter>Src\Application\Object\Crystal</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Object\Rank\Rank.cpp">
+      <Filter>Src\Application\Object\Rank</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

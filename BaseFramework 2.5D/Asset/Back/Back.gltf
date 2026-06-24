@@ -17,10 +17,10 @@
 			"mesh":0,
 			"name":"\u7403",
 			"rotation":[
+				-0.7071068286895752,
 				0,
-				0,
-				1,
-				7.549790126404332e-08
+				0.7071068286895752,
+				5.338508302088485e-08
 			]
 		}
 	],
@@ -62,8 +62,8 @@
 	"images":[
 		{
 			"mimeType":"image/png",
-			"name":"Daytime_Background_1024x800",
-			"uri":"Daytime_Background_1024x800.png"
+			"name":"BlueRock",
+			"uri":"BlueRock.png"
 		}
 	],
 	"accessors":[

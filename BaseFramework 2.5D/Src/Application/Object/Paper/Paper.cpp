@@ -1,6 +1,7 @@
 ﻿#include "Paper.h"
 #include "../../Scene/SceneManager.h"
 #include "../../Scene/GameScene/GameScene.h"
+#include "../../Scene/TitleScene/TitleScene.h"
 void Paper::Init()
 {
 	m_model = std::make_shared<KdModelData>();
@@ -9,28 +10,34 @@ void Paper::Init()
 	m_dir = Math::Vector3::Zero;
 	Math::Matrix transMat;
 	transMat = Math::Matrix::CreateTranslation(m_pos);
-	m_mWorld = transMat;
+	rotx = -20;
+	Math::Matrix rotateMat;
+	rotateMat = Math::Matrix::CreateRotationX(rotx);
+	m_mWorld = rotateMat*transMat;
 	m_pCollider = std::make_unique<KdCollider>();
-	m_pCollider->RegisterCollisionShape("EnemyCollision", { 0,0.5,0 }, 1, KdCollider::TypeDamage);
-	m_pDebugWire = std::make_unique<KdDebugWireFrame>();
+	m_pCollider->RegisterCollisionShape("EnemyCollision", { 0,0.5,0 }, 1, KdCollider::TypeEvent);
+	//m_pDebugWire = std::make_unique<KdDebugWireFrame>();
 	timer = 0;
 }
 
 void Paper::Update()
 {
-	timer++;
-	if (timer > 1800)
-	{
-		m_owner->DeletePaper();
-		m_isExpired = true;
+	if (m_gowner != nullptr) {
+		if (m_gowner->GetTimer() > 18000 || m_gowner->GetGoalFlg())
+		{
+			return;
+		}
+		timer++;
+		if (m_pos.y < -50)
+		{
+			m_gowner->DeletePaper();
+			m_isExpired = true;
+		}
 	}
 	if (m_isExpired) {
 		return;
 	}
-	if (timer % 60 == 0) {
-		m_dir.x = KdRandom::GetFloat(-0.01, 0.01);
-		m_dir.z = KdRandom::GetFloat(-0.01, 0.01);
-	}
+
 	m_dir.y -= m_gravity;
 	m_pos += m_dir;
 	// ========================================
@@ -55,12 +62,12 @@ void Paper::Update()
 	rayInfo.m_type = KdCollider::TypeGround;
 
 	// デバッグ用の情報としてライン描画を追加
-	m_pDebugWire->AddDebugLine
-	(
-		rayInfo.m_pos,	// 線の開始位置
-		rayInfo.m_dir,	// 線の方向
-		rayInfo.m_range	// 線の長さ
-	);
+	//m_pDebugWire->AddDebugLine
+	//(
+	//	rayInfo.m_pos,	// 線の開始位置
+	//	rayInfo.m_dir,	// 線の方向
+	//	rayInfo.m_range	// 線の長さ
+	//);
 
 
 	// レイに当たったオブジェクト情報を格納するリスト
@@ -100,8 +107,11 @@ void Paper::Update()
 	// 当たり判定　・・・　レイ判定　ここまで
 	// ========================================
 	Math::Matrix transMat;
-	transMat = Math::Matrix::CreateTranslation(m_pos);
-	m_mWorld = transMat;
+	transMat = Math::Matrix::CreateTranslation({m_pos.x,m_pos.y+0.2f,m_pos.z});
+	Math::Matrix rotateMat;
+	rotateMat = Math::Matrix::CreateRotationX(DirectX::XMConvertToRadians(rotx));
+	m_mWorld = rotateMat*transMat;
+	
 }
 
 void Paper::DrawLit()
@@ -111,6 +121,11 @@ void Paper::DrawLit()
 
 void Paper::OnHit()
 {
-	m_owner->DeletePaper();
+	if(m_gowner!=nullptr){
+		m_gowner->DeletePaper();
+	}
+	else if (m_towner != nullptr) {
+		m_towner->DeletePaper();
+	}
 	m_isExpired = true;
 }

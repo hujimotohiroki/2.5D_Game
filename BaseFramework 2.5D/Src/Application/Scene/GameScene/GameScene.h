@@ -12,12 +12,27 @@ public :
 	~GameScene() {}
 
 	int GetTimer() { return timer; }
-	void DeletePaper() { papernum--; }
+	bool GetPaperFlg() { return paperflg; }
+	bool GetGoalFlg() { return goalflg; }
+	void SetGoalFlg(bool isgoal) { goalflg = isgoal; }
+	void DeletePaper() { paperflg=true; }
+	void DeleteCrystal() { score++; }
+	void DeadBike() { bikeflg = false; }
+	Math::Vector3 GetPlayerPos();
+	Math::Vector3 GetCamPos() { return camPos; }
 private:
+	Math::Vector3 camPos;
 	std::shared_ptr<Bike> bike;
 	int timer;
+	int resulttimer;
+	int score;
+	bool resultflg;
+	bool bikeflg;
+	bool paperflg;
 	int papernum;
-	const int papermax = 5;
+	float roty = 0;
+	const int papermax = 20;
+	bool goalflg = false;
 	void Event() override;
 	void Init()  override;
 };

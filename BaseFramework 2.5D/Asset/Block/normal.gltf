@@ -15,7 +15,7 @@
 	"nodes":[
 		{
 			"mesh":0,
-			"name":"Cube",
+			"name":"\u7acb\u65b9\u4f53",
 			"translation":[
 				0,
 				-1,
@@ -26,14 +26,11 @@
 	"materials":[
 		{
 			"doubleSided":true,
-			"name":"Material",
+			"name":"\u30de\u30c6\u30ea\u30a2\u30eb.001",
 			"pbrMetallicRoughness":{
-				"baseColorFactor":[
-					0.800000011920929,
-					0.800000011920929,
-					0.800000011920929,
-					1
-				],
+				"baseColorTexture":{
+					"index":0
+				},
 				"metallicFactor":0,
 				"roughnessFactor":0.5
 			}
@@ -41,7 +38,7 @@
 	],
 	"meshes":[
 		{
-			"name":"Cube",
+			"name":"\u7acb\u65b9\u4f53",
 			"primitives":[
 				{
 					"attributes":{
@@ -53,6 +50,19 @@
 					"material":0
 				}
 			]
+		}
+	],
+	"textures":[
+		{
+			"sampler":0,
+			"source":0
+		}
+	],
+	"images":[
+		{
+			"mimeType":"image/png",
+			"name":"tutorial1",
+			"uri":"tutorial1.png"
 		}
 	],
 	"accessors":[
@@ -115,6 +125,12 @@
 			"byteLength":72,
 			"byteOffset":768,
 			"target":34963
+		}
+	],
+	"samplers":[
+		{
+			"magFilter":9729,
+			"minFilter":9987
 		}
 	],
 	"buffers":[

@@ -67,6 +67,8 @@ void Application::PreUpdate()
 // ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// ///// /////
 void Application::Update()
 {
+	std::string titleBar = "MinerBiker FPS:" + std::to_string(GetNowFPS());
+	SetWindowTextA(m_window.GetWndHandle(), titleBar.c_str());
 	SceneManager::Instance().Update();
 }
 
@@ -153,7 +155,7 @@ bool Application::Init(int w, int h)
 	//===================================================================
 	// ウィンドウ作成
 	//===================================================================
-	if (m_window.Create(w, h, "3D GameProgramming", "Window") == false) {
+	if (m_window.Create(w, h, "Neon Biker", "Window") == false) {
 		MessageBoxA(nullptr, "ウィンドウ作成に失敗", "エラー", MB_OK);
 		return false;
 	}
@@ -198,7 +200,7 @@ bool Application::Init(int w, int h)
 	//===================================================================
 	// imgui初期化
 	//===================================================================
-	KdDebugGUI::Instance().GuiInit(w, h);
+	//KdDebugGUI::Instance().GuiInit(w, h);
 
 	//===================================================================
 	// シェーダー初期化
@@ -219,7 +221,7 @@ bool Application::Init(int w, int h)
 	// ゲーム固有の初期化
 	//===================================================================
 	// 例えばカーソルを消したい場合
-	//ShowCursor(false);
+	ShowCursor(false);
 
 	return true;
 }
