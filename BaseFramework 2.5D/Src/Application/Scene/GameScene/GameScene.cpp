@@ -10,6 +10,7 @@
 #include"../../Object/Crystal/Crystal.h"
 #include"../../Object/Rank/Rank.h"
 #include"../../Object/Needle/Needle.h"
+#include"../../Object/Lava/Lava.h"
 #include"../../Object/Result/TimeOver.h"
 #include"../../Object/Result/GameOver.h"
 #include"../../Object/Result/GameClear.h"
@@ -65,7 +66,7 @@ void GameScene::Event()
 				gameover->Init();
 				m_objList.push_back(gameover);
 			}
-			if (bikeflg == true) {
+			if (goalflg == true) {
 				m_objList.clear();
 				std::shared_ptr<GameClear> gameclear = std::make_shared<GameClear>();
 				gameclear->SetCrystal(score);
@@ -87,14 +88,14 @@ void GameScene::Event()
 	Math::Matrix transMat = Math::Matrix::CreateTranslation(camPos);
 	Math::Matrix rotateX = Math::Matrix::CreateRotationX(DirectX::XMConvertToRadians(40));
 
-	if (GetAsyncKeyState('A') & 0x8000)
+	/*if (GetAsyncKeyState('A') & 0x8000)
 	{
 		roty += 1.0f;
 	}
 	if (GetAsyncKeyState('D') & 0x8000)
 	{
 		roty -= 1.0f;
-	}
+	}*/
 	Math::Matrix rotateY = Math::Matrix::CreateRotationY(DirectX::XMConvertToRadians(roty));
 	m_camera->SetCameraMatrix(rotateX*transMat*rotateY);
 	if (resultflg == false)timer++;
@@ -106,7 +107,7 @@ void GameScene::Init()
 	m_camera = std::make_unique<KdCamera>();
 	bike = std::make_shared<Bike>();
 	bike->Init();
-	bike->SetPos({ -18, -17, -18 });
+	bike->SetPos({ -18, -19, -18 });
 	bike->SetOwner(this);
 	m_objList.push_back(bike);
 	bikeflg = true;
@@ -149,8 +150,23 @@ void GameScene::Init()
 	std::shared_ptr<Crystal> crystal = std::make_shared<Crystal>();
 	crystal->Init();
 	crystal->SetOwner(this);
-	crystal->SetPos({ -18,-19.5,-18 });
+	crystal->SetPos({ -19,-19.5,-18 });
 	m_objList.push_back(crystal);
+	crystal = std::make_shared<Crystal>();
+	crystal->Init();
+	crystal->SetOwner(this);
+	crystal->SetPos({ -18,-21.2,18 });
+	m_objList.push_back(crystal);
+	crystal = std::make_shared<Crystal>();
+	crystal->Init();
+	crystal->SetOwner(this);
+	crystal->SetPos({ 18,-3.7,-18 });
+	m_objList.push_back(crystal);
+
+	std::shared_ptr<Lava> lava = std::make_shared<Lava>();
+	lava->Init();
+
+	m_objList.push_back(lava);
 	score = 0;
 }
 

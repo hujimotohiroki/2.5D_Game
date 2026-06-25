@@ -8,7 +8,7 @@ void Bike::Init()
 	m_polygon->SetMaterial("Asset/Textures/Bike.png");
 	m_polygon->SetPivot(KdSquarePolygon::PivotType::Center_Bottom);
 	m_polygon->SetSplit(2, 1);
-	m_pos = { -18, -17, -18 };
+	m_pos = { -18, -19, -18 };
 	m_mWorld = Math::Matrix::CreateTranslation(m_pos);
 	m_Frontpos = { 0.4,0,0 };
 	m_Rearpos = { -0.4,0,0 };
@@ -116,6 +116,16 @@ void Bike::Update()
 		}
 		speed *= 0.995;
 	}
+	else {
+		if (GetAsyncKeyState(VK_LEFT) & 0x8000)
+		{
+			m_rot.y -= 0.5f;
+		}
+		if (GetAsyncKeyState(VK_RIGHT) & 0x8000)
+		{
+			m_rot.y += 0.5f;
+		}
+	}
 
 	maxOverlap = 0;
 	hit = false;
@@ -196,7 +206,7 @@ void Bike::Update()
 	Math::Matrix rotatematZ = Math::Matrix::CreateRotationZ(DirectX::XMConvertToRadians(m_rot.z));
 	//ワールド行列の合成
 	m_mWorld = rotatematZ * rotatematY * transmat;
-	if (m_pos.y < -50){
+	if (m_pos.y < -28){
 		m_OutroFlg = true;
 	}
 	if (GetAsyncKeyState(VK_UP) & 0x8000 || GetAsyncKeyState(VK_DOWN) & 0x8000)

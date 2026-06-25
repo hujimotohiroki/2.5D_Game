@@ -281,6 +281,7 @@
     <ClInclude Include="Src\Application\Object\Crystal\Crystal.h" />
     <ClInclude Include="Src\Application\Object\Goal\Goal.h" />
     <ClInclude Include="Src\Application\Object\Ground\Ground.h" />
+    <ClInclude Include="Src\Application\Object\Lava\Lava.h" />
     <ClInclude Include="Src\Application\Object\Needle\Needle.h" />
     <ClInclude Include="Src\Application\Object\Paper\Paper.h" />
     <ClInclude Include="Src\Application\Object\Rank\Rank.h" />
@@ -349,6 +350,7 @@
     <ClCompile Include="Src\Application\Object\Crystal\Crystal.cpp" />
     <ClCompile Include="Src\Application\Object\Goal\Goal.cpp" />
     <ClCompile Include="Src\Application\Object\Ground\Ground.cpp" />
+    <ClCompile Include="Src\Application\Object\Lava\Lava.cpp" />
     <ClCompile Include="Src\Application\Object\Needle\Needle.cpp" />
     <ClCompile Include="Src\Application\Object\Paper\Paper.cpp" />
     <ClCompile Include="Src\Application\Object\Rank\Rank.cpp" />

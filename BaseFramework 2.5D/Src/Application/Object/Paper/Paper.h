@@ -22,6 +22,7 @@ private:
 	std::shared_ptr<KdModelData> m_model;
 	int timer;
 	float rotx;
+	float roty;
 	Math::Vector3 m_pos;
 	Math::Vector3 m_dir;
 };

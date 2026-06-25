@@ -5,12 +5,13 @@
 void Paper::Init()
 {
 	m_model = std::make_shared<KdModelData>();
-	m_model->Load("Asset/Paper/Paper.gltf");
+	m_model->Load("Asset/Paper/pickaxe.gltf");
 	m_pos = { 3,3,2 };
 	m_dir = Math::Vector3::Zero;
 	Math::Matrix transMat;
 	transMat = Math::Matrix::CreateTranslation(m_pos);
-	rotx = -20;
+	rotx = 50;
+	roty = 90;
 	Math::Matrix rotateMat;
 	rotateMat = Math::Matrix::CreateRotationX(rotx);
 	m_mWorld = rotateMat*transMat;
@@ -108,9 +109,11 @@ void Paper::Update()
 	// ========================================
 	Math::Matrix transMat;
 	transMat = Math::Matrix::CreateTranslation({m_pos.x,m_pos.y+0.2f,m_pos.z});
-	Math::Matrix rotateMat;
-	rotateMat = Math::Matrix::CreateRotationX(DirectX::XMConvertToRadians(rotx));
-	m_mWorld = rotateMat*transMat;
+	Math::Matrix rotateMatY;
+	rotateMatY = Math::Matrix::CreateRotationY(DirectX::XMConvertToRadians(roty));
+	Math::Matrix rotateMatX;
+	rotateMatX = Math::Matrix::CreateRotationX(DirectX::XMConvertToRadians(rotx));
+	m_mWorld = rotateMatX*rotateMatY*transMat;
 	
 }
 

@@ -1,0 +1,19 @@
+﻿#include "Lava.h"
+
+void Lava::Init()
+{
+	m_model = std::make_shared<KdModelData>();
+	m_model->Load("Asset/Block/lava.gltf");
+	Math::Matrix transMat;
+	transMat = Math::Matrix::CreateTranslation(Math::Vector3(0, -25, 0));
+	Math::Matrix scaleMat;
+	scaleMat = Math::Matrix::CreateScale(100);
+	Math::Matrix rotateMat;
+	rotateMat = Math::Matrix::CreateRotationY(DirectX::XMConvertToRadians(180));
+	m_mWorld = scaleMat * transMat* rotateMat;
+}
+
+void Lava::DrawLit()
+{
+	KdShaderManager::Instance().m_StandardShader.DrawModel(*m_model, m_mWorld);
+}
