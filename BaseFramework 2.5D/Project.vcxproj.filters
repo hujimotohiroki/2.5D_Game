@@ -345,6 +345,12 @@
     <ClInclude Include="Src\Application\Object\Lava\Lava.h">
       <Filter>Src\Application\Object\Lava</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\Object\Back\BreakBack.h">
+      <Filter>Src\Application\Object\Back</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Object\Back\SunBack.h">
+      <Filter>Src\Application\Object\Back</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -538,6 +544,12 @@
     </ClCompile>
     <ClCompile Include="Src\Application\Object\Lava\Lava.cpp">
       <Filter>Src\Application\Object\Lava</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Object\Back\BreakBack.cpp">
+      <Filter>Src\Application\Object\Back</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Object\Back\SunBack.cpp">
+      <Filter>Src\Application\Object\Back</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

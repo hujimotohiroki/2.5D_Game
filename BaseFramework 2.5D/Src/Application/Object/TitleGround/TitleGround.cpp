@@ -1,5 +1,5 @@
 ﻿#include "TitleGround.h"
-
+#include "../../Scene/TitleScene/TitleScene.h"
 void TitleGround::Init()
 {
 	m_model = std::make_shared<KdModelData>();
@@ -18,4 +18,13 @@ void TitleGround::Init()
 void TitleGround::DrawLit()
 {
 	KdShaderManager::Instance().m_StandardShader.DrawModel(*m_model, m_mWorld);
+}
+
+void TitleGround::Update()
+{
+	if (m_towner != nullptr) {
+		if (m_towner->GetGoalFlg()==true) {
+			m_isExpired = true;
+		}
+	}
 }

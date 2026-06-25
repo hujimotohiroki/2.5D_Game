@@ -219,8 +219,8 @@
 	"images":[
 		{
 			"mimeType":"image/png",
-			"name":"sun",
-			"uri":"sun.png"
+			"name":"sun.png",
+			"uri":"sun.png.png"
 		}
 	],
 	"accessors":[

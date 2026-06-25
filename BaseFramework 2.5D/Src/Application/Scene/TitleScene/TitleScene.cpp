@@ -46,6 +46,7 @@ void TitleScene::Init()
 	std::shared_ptr<TitleGround> ground = std::make_shared<TitleGround>();
 	ground->Init();
 	ground->SetPos({ 0, 0, 0 });
+	ground->SetOwner(this);
 	m_objList.push_back(ground);
 	std::shared_ptr<Back> back = std::make_shared<Back>();
 	back->Init();

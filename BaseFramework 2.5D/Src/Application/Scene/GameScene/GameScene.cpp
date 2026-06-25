@@ -2,6 +2,8 @@
 #include"../SceneManager.h"
 #include"../../Object/Bike/Bike.h"
 #include"../../Object/Back/Back.h"
+#include"../../Object/Back/BreakBack.h"
+#include"../../Object/Back/SunBack.h"
 #include"../../Object/BlackBoard/BlackBoard.h"
 #include"../../Object/Paper/Paper.h"
 #include"../../Object/Ground/Ground.h"
@@ -43,6 +45,12 @@ void GameScene::Event()
 		KdAudioManager::Instance().StopAllSound();
 		resultflg = true;
 		resulttimer = 0;
+		std::shared_ptr<BreakBack> breakback = std::make_shared<BreakBack>();
+		breakback->Init();
+		m_objList.push_back(breakback);
+		std::shared_ptr<SunBack> sunback = std::make_shared<SunBack>();
+		sunback->Init();
+		m_objList.push_back(sunback);
 		std::shared_ptr<BlackBoard> blackboard = std::make_shared<BlackBoard>();
 		blackboard->Init();
 		m_objList.push_back(blackboard);
@@ -117,6 +125,7 @@ void GameScene::Init()
 	m_objList.push_back(ground);
 	std::shared_ptr<Back> back = std::make_shared<Back>();
 	back->Init();
+	back->SetOwner(this);
 	m_objList.push_back(back);
 
 	std::shared_ptr<Paper> paper;
@@ -131,6 +140,7 @@ void GameScene::Init()
 	goal->Init();
 	goal->SetOwner(this);
 	m_objList.push_back(goal);
+	goalflg = false;
 	std::shared_ptr<Clock> clock = std::make_shared<Clock>();
 	clock->SetOwner(this);
 	clock->Init();
